@@ -2,6 +2,22 @@ const inputNum = document.getElementById("number");
 const convertBtn = document.getElementById("convert-btn");
 const outputContainer = document.getElementById("output");
 
+const romanNames = [
+  { M: 1000 },
+  { CM: 900 },
+  { D: 500 },
+  { CD: 400 },
+  { C: 100 },
+  { XC: 90 },
+  { L: 50 },
+  { XL: 40 },
+  { X: 10 },
+  { IX: 9 },
+  { V: 5 },
+  { IV: 4 },
+  { I: 1 },
+];
+
 const validateInput = (input) => {
   output.innerText = "";
 
@@ -19,6 +35,22 @@ const validateInput = (input) => {
 };
 
 const convertToRoman = () => {
+  let input = parseInt(inputNum.value);
+  let outputStr = "";
+  for (let i = 0; i < romanNames.length; i++) {
+    Object.entries(romanNames[i]).forEach(([key, value]) => {
+      const num = Math.floor(input / value);
+
+      if (num >= 1) {
+        outputStr += `${key}`.repeat(num);
+        input -= num * value;
+      }
+    });
+  }
+  outputContainer.innerText = outputStr;
+};
+
+const convertToRomanOld = () => {
   let input = parseInt(inputNum.value);
 
   let outputStr = "";
